@@ -9,8 +9,8 @@ const ProjectService = () => {
         return (await axios.get(backend_url)).data.payload;
     }
 
-    const createProject = async () => {
-        return (await axios.post(backend_url)).data.payload;
+    const createProject = async (project) => {
+        return (await axios.post(backend_url, project)).data.payload;
     }
     
     const updateProject = async (project) => {

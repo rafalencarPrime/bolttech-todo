@@ -5,7 +5,7 @@ const Types = mongoose.Schema.Types;
 
 const ProjectSchema = mongoose.Schema({
 
-    name: { type: Types.String },
+    name: { type: Types.String, unique: true, required: true },
     user: { type: Types.ObjectId, ref: 'User' }
 
 })
