@@ -1,11 +1,16 @@
 
-import React from 'react'
+import React from 'react';
+
+import Card from 'react-bootstrap/Card';
 
 const ProjectCreate = () => {
   return (
-    <div class="card" style={{width: '18rem'}}>
-      <div class="card-header">Create a new Project</div>
-    </div>
+    <Card style={{ width: '18rem' }}>
+      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+      <Card.Body>
+        <Card.Title>Create a new project</Card.Title>
+      </Card.Body>
+    </Card>
   )
 }
  

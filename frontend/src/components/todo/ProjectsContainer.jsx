@@ -1,14 +1,19 @@
 
 import ProjectCard from './ProjectCard';
-import ProjectCreate from './ProjectCreate'
+import ProjectCreate from './ProjectCreate';
  
+import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
 function ProjectContainer() {
   return (
     <Container>
-      <ProjectCard></ProjectCard>
-      <ProjectCreate></ProjectCreate>
+			<Row>
+				<ProjectCreate></ProjectCreate>
+				<ProjectCard></ProjectCard>
+				<ProjectCard></ProjectCard>
+				<ProjectCard></ProjectCard>
+			</Row>
     </Container>
   );
 }

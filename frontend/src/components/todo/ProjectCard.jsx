@@ -1,21 +1,37 @@
 
 import React from 'react';
 
+import TaskCreate from './TaskCreate';
+
+import { Card, ListGroup, ListGroupItem, Form } from 'react-bootstrap';
+
 const ProjectCard = () => {
   return (
-    <div class="card" style={{width: '18rem'}}>
-      <div class="card-header">Project 1</div>
-      <ul class="list-group list-group-flush">To Do
-        <li class="list-group-item">Task 1</li>
-        <li class="list-group-item">Task 2</li>
-        <li class="list-group-item">Task 3</li>
-      </ul>
-      <ul class="list-group list-group-flush">Done
-        <li class="list-group-item">Task 4</li>
-        <li class="list-group-item">Task 5</li>
-        <li class="list-group-item">Task 6</li>
-      </ul>
-    </div>
+    <Card style={{ width: '18rem' }}>
+      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+      <Card.Body>
+        <Card.Title>Project</Card.Title>
+        <ListGroup className="list-group-flush">To Do
+          <ListGroupItem>
+            <Form.Check
+              type="checkbox"
+              label="task to do example"
+            />
+            </ListGroupItem>
+        </ListGroup>
+        <ListGroup className="list-group-flush"> Done
+          <ListGroupItem>
+            <Form.Check
+              checked
+              disabled
+              type="checkbox"
+              label="task done example"
+            />
+            </ListGroupItem>
+        </ListGroup>
+        <TaskCreate></TaskCreate>
+      </Card.Body>
+    </Card>
   )
 }
  
