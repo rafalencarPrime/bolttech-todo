@@ -8,7 +8,7 @@ const ProjectCreate = () => {
     <Card style={{ width: '18rem' }}>
 			<Card.Header>Create a new project</Card.Header>
 			<Form>
-				<Form.Group controlId="formBasicEmail">
+				<Form.Group>
 					<Form.Control
 						type="text"
 						placeholder="Enter a project"

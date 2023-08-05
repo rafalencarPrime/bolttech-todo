@@ -9,26 +9,29 @@ const ProjectCard = ({project}) => {
 
   return (
     <Card style={{ width: '18rem' }}>
-      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
       <Card.Header>{project.name}</Card.Header>
         <ListGroup className="list-group-flush">To Do
-          <ListGroupItem>
-            <Form.Check
-              type="checkbox"
-              label="task to do example"
-            />
-            </ListGroupItem>
+          {project.todo?.map((task) => (
+            <ListGroupItem key={task.description}>
+              <Form.Check
+                type="checkbox"
+                label={task.description}
+              />
+            </ListGroupItem>))
+          }
         </ListGroup>
         <ListGroup className="list-group-flush"> Done
-          <ListGroupItem>
-            <Form.Check
-              checked
-              disabled
-              type="checkbox"
-              label="task done example"
-            />
-            </ListGroupItem>
+          {project.done?.map((task) => (
+            <ListGroupItem key={task.description}>
+              <Form.Check
+                checked
+                disabled
+                type="checkbox"
+                label={task.description}
+              />
+            </ListGroupItem>))
+          }
         </ListGroup>
         <TaskCreate></TaskCreate>
       </Card.Body>
