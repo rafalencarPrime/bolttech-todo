@@ -5,14 +5,20 @@ import ProjectCreate from './ProjectCreate';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
+import useProjects from '../../hooks/useProjects';
+
 function ProjectContainer() {
+
+	const [ projects ] = useProjects();
+
   return (
     <Container>
 			<Row>
 				<ProjectCreate></ProjectCreate>
-				<ProjectCard></ProjectCard>
-				<ProjectCard></ProjectCard>
-				<ProjectCard></ProjectCard>
+				{
+					projects.map((project) => (
+						<ProjectCard key={project._id} project={project}></ProjectCard>
+				))}
 			</Row>
     </Container>
   );

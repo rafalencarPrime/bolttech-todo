@@ -11,7 +11,7 @@ const ProjectCreate = () => {
 				<Form.Group controlId="formBasicEmail">
 					<Form.Control
 						type="text"
-						placeholder="Enter a task"
+						placeholder="Enter a project"
 					/>
 				</Form.Group>
 				<Button variant="primary">

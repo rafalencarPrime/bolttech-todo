@@ -5,12 +5,13 @@ import TaskCreate from './TaskCreate';
 
 import { Card, ListGroup, ListGroupItem, Form } from 'react-bootstrap';
 
-const ProjectCard = () => {
+const ProjectCard = ({project}) => {
+
   return (
     <Card style={{ width: '18rem' }}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
-      <Card.Header>Project X</Card.Header>
+      <Card.Header>{project.name}</Card.Header>
         <ListGroup className="list-group-flush">To Do
           <ListGroupItem>
             <Form.Check
