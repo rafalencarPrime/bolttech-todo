@@ -10,7 +10,7 @@ const ProjectCard = () => {
     <Card style={{ width: '18rem' }}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
-        <Card.Title>Project</Card.Title>
+      <Card.Header>Project X</Card.Header>
         <ListGroup className="list-group-flush">To Do
           <ListGroupItem>
             <Form.Check

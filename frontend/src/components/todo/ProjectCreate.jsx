@@ -1,15 +1,23 @@
 
 import React from 'react';
 
-import Card from 'react-bootstrap/Card';
+import {Card, Button, Form} from 'react-bootstrap';
 
 const ProjectCreate = () => {
   return (
     <Card style={{ width: '18rem' }}>
-      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-      <Card.Body>
-        <Card.Title>Create a new project</Card.Title>
-      </Card.Body>
+			<Card.Header>Create a new project</Card.Header>
+			<Form>
+				<Form.Group controlId="formBasicEmail">
+					<Form.Control
+						type="text"
+						placeholder="Enter a task"
+					/>
+				</Form.Group>
+				<Button variant="primary">
+					Add
+				</Button>
+			</Form>
     </Card>
   )
 }
