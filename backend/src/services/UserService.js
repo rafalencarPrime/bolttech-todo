@@ -3,12 +3,8 @@ import User from '../models/User.js';
 
 const UserService = () => {
 
-    const findAll = async () => {
-        return await User.find();
-    }
-
-    const findById = async (id) => {
-        return await User.findOne({ _id: id });
+    const findByEmail= async (email) => {
+        return await User.findOne({ email: email });
     }
 
     const create = async (user) => {
@@ -24,8 +20,7 @@ const UserService = () => {
     }
 
     return {
-        findAll,
-        findById,
+        findByEmail,
         create,
         update,
         remove

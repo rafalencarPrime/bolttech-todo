@@ -2,7 +2,7 @@
 import express  from 'express';
 import cors     from 'cors';
 import auth     from './routes/authentication.js';
-import users    from './routes/users.js';
+import AuthUtils from './utils/AuthUtils.js'
 import projects from './routes/projects.js';
 import tasks    from './routes/tasks.js';
 import Database from './utils/Database.js';
@@ -19,10 +19,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to Bolttech To-Do')
 })
 
-app.use('/auth',     auth);
-app.use('/users',    users);
-app.use('/projects', projects);
-app.use('/tasks',    tasks);
+app.use('/',     auth);
+app.use('/projects', AuthUtils.authenticateJWT, projects);
+app.use('/tasks',    AuthUtils.authenticateJWT, tasks);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -8,8 +8,8 @@ const ProjectService = () => {
         return await Project.find({ user: userId}).populate('todo done');
     }
 
-    const create = async (name) => {
-        return await Project.create({name: name});
+    const create = async (project) => {
+        return await Project.create(project);
     }
 
     const changeName = async (id, name) => {

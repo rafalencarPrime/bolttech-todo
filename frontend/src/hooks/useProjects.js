@@ -26,7 +26,7 @@ const useProjects = () => {
         loadData();
     }
 
-    return [projects, loaded, reload];
+    return [projects, setProjects, loaded, reload];
 }
 
 export default useProjects;

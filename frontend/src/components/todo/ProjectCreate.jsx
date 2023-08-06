@@ -1,16 +1,17 @@
 
 import { useState } from 'react';
-import {Card, Button, Form} from 'react-bootstrap';
+import { Card, Button, Form } from 'react-bootstrap';
 
 import ProjectService from '../../services/ProjectService';
 
-const ProjectCreate = () => {
+const ProjectCreate = ({onNewProject}) => {
 
 	const [name, setName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await ProjectService.createProject(name);
+    const project = await ProjectService.createProject(name);
+		onNewProject(project);
   };
 
   return (

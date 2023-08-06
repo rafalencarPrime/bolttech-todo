@@ -7,14 +7,18 @@ import Container from 'react-bootstrap/Container';
 
 import useProjects from '../../hooks/useProjects';
 
-function ProjectContainer() {
+function ProjectPage() {
 
-	const [ projects ] = useProjects();
+	const [ projects, setProjects ] = useProjects();
+
+	const handleNewProject = (newProject) => {
+    setProjects(prevProjects => [...prevProjects, newProject]);
+  }
 
   return (
     <Container style={{ margin: '1%'}}>
 			<Row>
-				<ProjectCreate></ProjectCreate>
+				<ProjectCreate onNewProject={handleNewProject}></ProjectCreate>
 				{
 					projects.map((project) => (
 						<ProjectCard key={project._id} project={project}></ProjectCard>
@@ -24,4 +28,4 @@ function ProjectContainer() {
   );
 }
  
-export default ProjectContainer;
+export default ProjectPage;
