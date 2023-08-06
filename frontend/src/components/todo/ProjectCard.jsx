@@ -2,9 +2,10 @@
 import React from 'react';
 
 import TaskCreate from './TaskCreate';
-
-import { Card, ListGroup, ListGroupItem, Form } from 'react-bootstrap';
 import TaskService from '../../services/TaskService';
+
+import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
+import ProjectService from '../../services/ProjectService';
 
 const ProjectCard = ({project}) => {
 
@@ -12,10 +13,24 @@ const ProjectCard = ({project}) => {
     await TaskService.finishTask(id);
   };
 
+  const handleEdit = async (id, event) => {
+    await ProjectService.changeProjectName();
+  };
+
+  const handleDelete = async (id, event) => {
+    await ProjectService.deleteProject();
+  };
+
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ paddingTop: '1%', width: '18rem', margin: '1%'}}>
+      <Card.Header style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Card.Title>{project.name}</Card.Title>
+        <div>
+          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleDelete}>Delete</Button>
+        </div>
+      </Card.Header>
       <Card.Body>
-      <Card.Header>{project.name}</Card.Header>
         <ListGroup className="list-group-flush">To Do
           {project.todo?.map((task) => (
             <ListGroupItem key={task._id}>

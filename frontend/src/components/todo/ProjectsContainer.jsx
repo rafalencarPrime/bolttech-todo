@@ -12,7 +12,7 @@ function ProjectContainer() {
 	const [ projects ] = useProjects();
 
   return (
-    <Container>
+    <Container style={{ margin: '1%'}}>
 			<Row>
 				<ProjectCreate></ProjectCreate>
 				{

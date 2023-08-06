@@ -14,7 +14,7 @@ const ProjectCreate = () => {
   };
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{  paddingTop: '1%', width: '18rem', margin: '1%'}}>
 			<Card.Header>Create a new project</Card.Header>
 			<Form onSubmit={handleSubmit}>
 				<Form.Group controlId="formBasicName">
