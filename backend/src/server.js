@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to Bolttech To-Do')
 })
 
-app.use('/auth',     auth);
+app.use('/',     auth);
 app.use('/users',    users);
 app.use('/projects', projects);
 app.use('/tasks',    tasks);

@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 
 import useProjects from '../../hooks/useProjects';
 
-function ProjectContainer() {
+function ProjectPage() {
 
 	const [ projects ] = useProjects();
 
@@ -24,4 +24,4 @@ function ProjectContainer() {
   );
 }
  
-export default ProjectContainer;
+export default ProjectPage;
