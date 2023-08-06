@@ -4,25 +4,11 @@ import TaskService from '../services/TaskService.js';
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+// Create new task in todo
+router.post('/:projectId', async (req, res) => {
     
     try {
-        const data = await TaskService.findAll(); 
-        res.status(200).json({
-            message: "Object found",
-            payload: data
-        });   
-    }
-    catch(e) {
-        res.status(500).json({message: "Error: Could not get object"});
-    }
-
-})
-
-router.post('/', async (req, res) => {
-    
-    try {
-        const data = await TaskService.create(req.body); 
+        const data = await TaskService.create(req.body.description, req.params.projectId);
         res.status(200).json({
             message: "Object created",
             payload: data
@@ -34,10 +20,11 @@ router.post('/', async (req, res) => {
 
 })
 
-router.put('/:id', async (req, res) => {
+// Finish task
+router.put('/finish/:id', async (req, res) => {
     
     try {
-        const data = await TaskService.update(req.params.id, req.body);
+        const data = await TaskService.finish(req.params.id);
         res.status(200).json({
             message: "Object updated",
             payload: data
@@ -49,6 +36,7 @@ router.put('/:id', async (req, res) => {
 
 })
 
+// Remove task if it's in todo
 router.delete('/:id', async (req, res) => {
     
     try {

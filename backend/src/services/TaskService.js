@@ -1,34 +1,34 @@
 
 import Task from '../models/Task.js';
+import ProjectService from './ProjectService.js';
 
 const TaskService = () => {
 
-    const findAll = async () => {
-        return await Task.find();
+    const create = async (description, projectId) => {
+        const task = await Task.create({description: description});
+        await ProjectService.addTask(projectId, task._id); 
+        return task;
     }
 
-    const findById = async (id) => {
-        return await Task.findOne({ _id: id });
+    const finish = async (id) => {
+        const task = await Task.updateOne({ _id: id }, {finishedAt: Date.now()});
+        await ProjectService.finishTask(task.project, id);
     }
 
-    const create = async (task) => {
-        return await Task.create(task);
+    const remove = async (taskId, projectId) => {
+        await ProjectService.removeTask(projectId, taskId);
+        return await Task.deleteOne({ _id: taskId });
     }
 
-    const update = async (task) => {
-        return await Task.updateOne({ _id: task.id }, task);
-    }
-
-    const remove = async (id) => {
-        return await Task.deleteOne({ _id: id });
+    const removeMany = async (projectId) => {
+        return await Task.delete({ project: projectId });
     }
 
     return {
-        findAll,
-        findById,
         create,
-        update,
-        remove
+        finish,
+        remove,
+        removeMany
     }
 }
 

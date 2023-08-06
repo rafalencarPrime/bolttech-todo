@@ -10,7 +10,7 @@ const ProjectCreate = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await ProjectService.createProject({ name });
+    await ProjectService.createProject(name);
   };
 
   return (
@@ -25,8 +25,8 @@ const ProjectCreate = () => {
 						placeholder="Enter project name"
 					/>
 				</Form.Group>
-				<Button variant="primary" type="submit">Add</Button>
-    </Form>
+				<Button variant="primary" type="submit">Create a new project</Button>
+    	</Form>
     </Card>
   )
 }

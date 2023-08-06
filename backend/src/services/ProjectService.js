@@ -1,33 +1,46 @@
 
 import Project from '../models/Project.js';
+import TaskService from './TaskService.js';
 
 const ProjectService = () => {
 
-    const findAll = async () => {
-        return await Project.find();
+    const findByUser = async (userId) => {
+        return await Project.find({ user: userId}).populate('todo done');
     }
 
-    const findById = async (id) => {
-        return await Project.findOne({ _id: id });
+    const create = async (name) => {
+        return await Project.create({name: name});
     }
 
-    const create = async (project) => {
-        return await Project.create(project);
+    const changeName = async (name) => {
+        return await Project.updateOne({ _id: project.id }, { name:name });
     }
 
-    const update = async (project) => {
-        return await Project.updateOne({ _id: project.id }, project);
+    const addTask = async (id, taskId) => {
+        return await Project.updateOne({ _id: id }, { $push: { todo: taskId } });
+    }
+
+    const removeTask = async (id, taskId) => {
+        return await Project.updateOne({ _id: id }, { $pull: { done: taskId } });
+    }
+
+    const finishTask = async (id, taskId) => {
+        await Project.updateOne({ _id: id }, { $pull: { todo: taskId } });
+        return await Project.updateOne({ _id: id }, { $push: { done: taskId } });
     }
 
     const remove = async (id) => {
+        await TaskService.removeMany(id);
         return await Project.deleteOne({ _id: id });
     }
 
     return {
-        findAll,
-        findById,
+        findByUser,
         create,
-        update,
+        changeName,
+        addTask,
+        removeTask,
+        finishTask,
         remove
     }
 }

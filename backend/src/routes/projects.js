@@ -4,10 +4,14 @@ import ProjectService from '../services/ProjectService.js';
 
 const router = express.Router()
 
+// Get all projects from that user
 router.get('/', async (req, res) => {
     
     try {
-        const data = await ProjectService.findAll(); 
+
+        // userId = req.user.id
+        const userId = null;
+        const data = await ProjectService.findByUser(userId); 
         res.status(200).json({
             message: "Object found",
             payload: data
@@ -19,10 +23,12 @@ router.get('/', async (req, res) => {
 
 })
 
+// Create new project for the user
 router.post('/', async (req, res) => {
     
     try {
-        const data = await ProjectService.create(req.body); 
+        // req.body.user = req.user.id
+        const data = await ProjectService.create(req.body.name); 
         res.status(200).json({
             message: "Object created",
             payload: data
@@ -34,10 +40,11 @@ router.post('/', async (req, res) => {
 
 })
 
-router.put('/:id', async (req, res) => {
+// Change name of the project
+router.put('/changeName/:id', async (req, res) => {
     
     try {
-        const data = await ProjectService.update(req.params.id, req.body);
+        const data = await ProjectService.changeName(req.params.id, req.body.name);
         res.status(200).json({
             message: "Object updated",
             payload: data
@@ -49,6 +56,7 @@ router.put('/:id', async (req, res) => {
 
 })
 
+// Delete project
 router.delete('/:id', async (req, res) => {
     
     try {

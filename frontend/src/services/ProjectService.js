@@ -9,22 +9,22 @@ const ProjectService = () => {
         return (await axios.get(backend_url)).data.payload;
     }
 
-    const createProject = async (project) => {
-        return (await axios.post(backend_url, project)).data.payload;
+    const createProject = async (name) => {
+        return (await axios.post(backend_url, {name: name})).data.payload;
     }
     
-    const updateProject = async (project) => {
-        return (await axios.put(`${backend_url}/${project.id}`, project)).data.payload;
+    const changeProjectName = async (id, name) => {
+        return (await axios.put(`${backend_url}/${id}`, {name: name})).data.payload;
     }
 
-    const deleteProject = async (project) => {
-        await axios.delete(`${backend_url}/${project.id}`);
+    const deleteProject = async (id) => {
+        await axios.delete(`${backend_url}/${id}`);
     }
 
     return {
         getProjects,
         createProject,
-        updateProject,
+        changeProjectName,
         deleteProject,
     }
 }

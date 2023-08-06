@@ -33,7 +33,7 @@ const ProjectCard = ({project}) => {
             </ListGroupItem>))
           }
         </ListGroup>
-        <TaskCreate></TaskCreate>
+        <TaskCreate projectId={project._id}></TaskCreate>
       </Card.Body>
     </Card>
   )
