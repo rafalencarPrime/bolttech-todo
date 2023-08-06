@@ -21,7 +21,7 @@ const TaskService = () => {
     }
 
     const removeMany = async (projectId) => {
-        return await Task.delete({ project: projectId });
+        return await Task.deleteMany({ project: projectId });
     }
 
     return {

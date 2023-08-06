@@ -7,18 +7,22 @@ import TaskService from '../../services/TaskService';
 import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
-const ProjectCard = ({project}) => {
+const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
 
-  const handleCheckBox = async (id, event) => {
+  const handleCheckBox = async (id) => {
     await TaskService.finishTask(id);
+
+await TaskService.finishTask(id);
   };
 
   const handleEdit = async (id, event) => {
     await ProjectService.changeProjectName();
+    onUpdateProject();
   };
 
-  const handleDelete = async (id, event) => {
-    await ProjectService.deleteProject();
+  const handleDelete = async () => {
+    await ProjectService.deleteProject(project._id);
+    onRemoveProject(project._id);
   };
 
   return (
