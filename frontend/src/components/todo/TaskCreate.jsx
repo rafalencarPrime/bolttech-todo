@@ -1,7 +1,7 @@
 
 import React, { useState} from 'react';
 
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row } from 'react-bootstrap';
 
 import TaskService from '../../services/TaskService';
 
@@ -15,7 +15,8 @@ const TaskCreate = ({projectId}) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Row>
+      <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formBasicName">
 				<Form.Control
 					type="text"
@@ -26,6 +27,8 @@ const TaskCreate = ({projectId}) => {
 			</Form.Group>
 			<Button variant="primary" type="submit">Add</Button>
     </Form>
+    </Row>
+    
   )
 }
  

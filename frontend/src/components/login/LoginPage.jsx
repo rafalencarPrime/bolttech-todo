@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Container, Button, Form, Row} from 'react-bootstrap';
+import { Card, Button, Form, Row} from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -44,12 +44,13 @@ const LoginPage = () => {
   }
 
   return (
-    <Container>
+    <Card style={{ padding: '1%', width: '50%', margin: '1%'}}>
+      <Card.Header>Login</Card.Header>
       { loginError && <div className='alert alert-danger text-center'>Login Error</div> }
       <Form disabled={submitDisabled}>
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
         <Form.Label>Email</Form.Label>
-        <Form.Control value={email} plaintext defaultValue="email@example.com" 
+        <Form.Control value={email} type='email' plaintext defaultValue="email@example.com" 
           onChange={(e) => setEmail(e.target.value)} required autoFocus />
       </Form.Group>
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -63,7 +64,7 @@ const LoginPage = () => {
     <div>
       <Link to='/register'>Register</Link>
     </div>
-    </Container>
+    </Card>
   );
 };
 

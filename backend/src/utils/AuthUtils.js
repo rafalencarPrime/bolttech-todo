@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 dotenv.config();
 
-const Encryption = () => {
+const AuthUtils = () => {
 
     const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -23,15 +23,35 @@ const Encryption = () => {
     }
 
     const createToken = (id) => {
-        const payload = { user: String('' + id)  };
+        const payload = { id: String('' + id)  };
         return jwt.sign(payload, JWT_SECRET);
     }
+
+    const authenticateJWT = (req, res, next) => {
+        const authHeader = req.headers.authorization;
+
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+
+            jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+                if (err) {
+                    return res.sendStatus(403);
+                }
+                req.user = user;
+                next();
+            });
+        } 
+        else {
+            res.sendStatus(401);
+        }
+    };
 
     return {
         hash,
         equals,
-        createToken
+        createToken,
+        authenticateJWT
     }
 }
 
-export default Encryption();
+export default AuthUtils();

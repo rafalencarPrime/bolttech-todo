@@ -8,10 +8,7 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     
     try {
-
-        // userId = req.user.id
-        const userId = null;
-        const data = await ProjectService.findByUser(userId); 
+        const data = await ProjectService.findByUser(req.user.id); 
         res.status(200).json({
             message: "Object found",
             payload: data
@@ -27,8 +24,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     
     try {
-        // req.body.user = req.user.id
-        const data = await ProjectService.create(req.body.name); 
+        req.body.user = req.user.id;
+        const data = await ProjectService.create(req.body); 
         res.status(200).json({
             message: "Object created",
             payload: data
