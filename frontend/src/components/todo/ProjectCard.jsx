@@ -4,13 +4,18 @@ import React from 'react';
 import TaskCreate from './TaskCreate';
 import TaskService from '../../services/TaskService';
 
-import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
 const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
 
   const handleCheckBox = async (id) => {
     await TaskService.finishTask(id);
+    const updatedProject = {
+      ...project,
+
+    }
+    onUpdateProject(updatedProject);
 
 await TaskService.finishTask(id);
   };
@@ -35,30 +40,26 @@ await TaskService.finishTask(id);
         </div>
       </Card.Header>
       <Card.Body>
-        <ListGroup className="list-group-flush">To Do
-          {project.todo?.map((task) => (
-            <ListGroupItem key={task._id}>
-              <Form.Check
-                type="checkbox"
-                label={task.description}
-                onChange={(event) => handleCheckBox(task._id, event)}
-              />
-            </ListGroupItem>))
-          }
-        </ListGroup>
-        <ListGroup className="list-group-flush"> Done
+        <Form.Group>To Do
+          {project.todo?.map((task) => (  
+            <Form.Check
+              type="checkbox"
+              label={task.description}
+              onChange={(event) => handleCheckBox(task._id, event)}
+            />
+          ))}
+        </Form.Group>
+        <Form.Group> Done
           {project.done?.map((task) => (
-            <ListGroupItem key={task.description}>
-              <Form.Check
-                checked
-                disabled
-                type="checkbox"
-                label={task.description}
-              />
-            </ListGroupItem>))
-          }
-        </ListGroup>
-        <TaskCreate projectId={project._id}></TaskCreate>
+            <Form.Check
+              checked
+              disabled
+              type="checkbox"
+              label={task.description}
+            />
+          ))}
+        </Form.Group>
+        <TaskCreate project={project} onUpdateProject={onUpdateProject}/>
       </Card.Body>
     </Card>
   )

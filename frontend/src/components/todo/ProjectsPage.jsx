@@ -15,10 +15,10 @@ function ProjectPage() {
     setProjects(prevProjects => [...prevProjects, newProject]);
   }
 
-	const handleUpdateProject= (id, newProject) => {
+	const handleUpdateProject= (updatedProject) => {
     const newProjects = projects.map(project => {
-      if (project._id === id) {
-        return { ...project, newProject };
+      if (project._id === updatedProject._id) {
+        return { ...project, updatedProject };
       }
       return project;
     });

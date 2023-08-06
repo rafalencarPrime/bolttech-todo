@@ -5,13 +5,19 @@ import { Button, Form, Row } from 'react-bootstrap';
 
 import TaskService from '../../services/TaskService';
 
-const TaskCreate = ({projectId}) => {
+const TaskCreate = ({project, onUpdateProject}) => {
 
   const [description, setDescription] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await TaskService.createTask(projectId, description);
+
+    const newTask = await TaskService.createTask(project._id, description);
+    
+    project.todo.push(newTask)
+    
+    onUpdateProject(project)
+    setDescription('')
   };
 
   return (
