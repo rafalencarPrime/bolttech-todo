@@ -4,7 +4,7 @@ import React from 'react';
 import TaskCreate from './TaskCreate';
 import TaskService from '../../services/TaskService';
 
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
 const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
@@ -36,7 +36,8 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
         </div>
       </Card.Header>
       <Card.Body>
-        <Form.Group>To Do
+        <Form.Group>
+          <h6>To Do</h6>
           {project.todo?.map((task) => (  
             <Form.Check
             key={task._id}
@@ -46,15 +47,18 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
             />
           ))}
         </Form.Group>
-        <Form.Group> Done
+        <Form.Group> 
+          <h6>Done</h6>
           {project.done?.map((task) => (
-            <Form.Check
-              key={task._id}
-              checked
-              disabled
-              type="checkbox"
-              label={task.description}
-            />
+            <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-right">{task.finishedAt}</Tooltip>}>
+              <Form.Check
+                key={task._id}
+                checked
+                disabled
+                type="checkbox"
+                label={task.description}>
+              </Form.Check>
+            </OverlayTrigger>
           ))}
         </Form.Group>
       </Card.Body>

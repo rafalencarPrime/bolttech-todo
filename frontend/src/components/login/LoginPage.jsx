@@ -47,23 +47,24 @@ const LoginPage = () => {
     <Card style={{ padding: '1%', width: '50%', margin: '1%'}}>
       <Card.Header>Login</Card.Header>
       { loginError && <div className='alert alert-danger text-center'>Login Error</div> }
-      <Form disabled={submitDisabled}>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control value={email} type='email' plaintext defaultValue="email@example.com" 
-          onChange={(e) => setEmail(e.target.value)} required autoFocus />
-      </Form.Group>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} type="password" placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)} required />
-      </Form.Group>
-      <Button onClick={handleSubmit}>Submit</Button>
-    </Form>
-
-    <div>
-      <Link to='/register'>Register</Link>
-    </div>
+      <Card.Body>
+        <Form disabled={submitDisabled}>
+          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+            <h5>Email</h5>
+            <Form.Control value={email} type='email' defaultValue="email@example.com" 
+              onChange={(e) => setEmail(e.target.value)} required/>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+            <h5>Password</h5>
+            <Form.Control value={password} type="password" placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)} required />
+          </Form.Group>
+        </Form>
+      </Card.Body>
+      <Card.Footer>
+        <Button onClick={handleSubmit}>Submit</Button>
+        <Link to='/register'>Register</Link>
+      </Card.Footer>
     </Card>
   );
 };

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, InputGroup } from 'react-bootstrap';
 
 import ProjectService from '../../services/ProjectService';
 
@@ -15,19 +15,21 @@ const ProjectCreate = ({onNewProject}) => {
   };
 
   return (
-    <Card style={{  paddingTop: '1%', width: '18rem', margin: '1%'}}>
+    <Card style={{  paddingTop: '1%', width: '22rem', margin: '1%'}}>
 			<Card.Header>Create a new project</Card.Header>
-			<Form onSubmit={handleSubmit}>
-				<Form.Group controlId="formBasicName">
-					<Form.Control
-						type="text"
-						value={name}
-						onChange={(event) => setName(event.target.value)}
-						placeholder="Enter project name"
-					/>
-				</Form.Group>
-				<Button variant="primary" type="submit">Create a new project</Button>
-    	</Form>
+			<Card.Footer>
+				<Form onSubmit={handleSubmit}>
+					<InputGroup className="mb-3">
+						<Form.Control
+							type="text"
+							value={name}
+							onChange={(event) => setName(event.target.value)}
+							placeholder="Enter project name"
+						/>
+						<Button variant="primary" type="submit">+</Button>
+					</InputGroup>
+				</Form>
+			</Card.Footer>
     </Card>
   )
 }
