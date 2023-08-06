@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         const data = await UserService.findAll(); 
         res.status(200).json({
             message: "Object found",
-            data: data
+            payload: data
         });   
     }
     catch(e) {
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         const data = await UserService.create(req.body); 
         res.status(200).json({
             message: "Object created",
-            data: data
+            payload: data
         });   
     }
     catch(e) {
@@ -40,7 +40,7 @@ router.put('/:id', async (req, res) => {
         const data = await UserService.update(req.params.id, req.body);
         res.status(200).json({
             message: "Object updated",
-            data: data
+            payload: data
         });   
     }
     catch(e) {
@@ -55,7 +55,7 @@ router.delete('/:id', async (req, res) => {
         const data = await UserService.remove(req.params.id);
         res.status(200).json({
             message: "Object deleted",
-            data: data
+            payload: data
         });  
     }
     catch(e) {

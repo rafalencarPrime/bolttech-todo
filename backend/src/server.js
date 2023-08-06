@@ -1,5 +1,6 @@
 
 import express  from 'express';
+import cors     from 'cors';
 import auth     from './routes/authentication.js';
 import users    from './routes/users.js';
 import projects from './routes/projects.js';
@@ -7,7 +8,10 @@ import tasks    from './routes/tasks.js';
 import Database from './utils/Database.js';
 
 const app = express()
-const port = 3000
+const port = 4000
+
+app.use(cors({ origin: '*' }));
+app.use(express.json())
 
 await Database.connect();
 
