@@ -20,7 +20,6 @@ const ProjectService = () => {
     }
 
     const deleteProject = async (id) => {
-        console.log(id)
         await axios.delete(`${SERVER_URL}/${id}`);
     }
 

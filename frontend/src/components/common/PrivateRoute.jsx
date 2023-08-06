@@ -2,6 +2,7 @@
 import { useAuth } from '../../hooks/useAuth.js';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import Header from "./Header";
 
 const PrivateRoutes = () => {
 
@@ -17,7 +18,12 @@ const PrivateRoutes = () => {
         
     }, [auth, location, navigate])
     
-    return <Outlet />
+    return (
+        <>
+        {auth.user && <Header />}
+        <Outlet/>
+        </>
+    )
 }
 
 export default PrivateRoutes;
