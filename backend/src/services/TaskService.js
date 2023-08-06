@@ -13,6 +13,7 @@ const TaskService = () => {
     const finish = async (id) => {
         const task = await Task.findByIdAndUpdate({ _id: id }, {finishedAt: Date.now()});
         await ProjectService.finishTask(task.project, id);
+        return task;
     }
 
     const remove = async (taskId, projectId) => {
