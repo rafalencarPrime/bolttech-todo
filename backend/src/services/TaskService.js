@@ -5,13 +5,13 @@ import ProjectService from './ProjectService.js';
 const TaskService = () => {
 
     const create = async (description, projectId) => {
-        const task = await Task.create({description: description});
+        const task = await Task.create({description: description, project: projectId});
         await ProjectService.addTask(projectId, task._id); 
         return task;
     }
 
     const finish = async (id) => {
-        const task = await Task.updateOne({ _id: id }, {finishedAt: Date.now()});
+        const task = await Task.findByIdAndUpdate({ _id: id }, {finishedAt: Date.now()});
         await ProjectService.finishTask(task.project, id);
     }
 

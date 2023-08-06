@@ -12,21 +12,21 @@ const ProjectService = () => {
         return await Project.create({name: name});
     }
 
-    const changeName = async (name) => {
-        return await Project.updateOne({ _id: project.id }, { name:name });
+    const changeName = async (id, name) => {
+        return await Project.findByIdAndUpdate({ _id: id }, { name: name });
     }
 
     const addTask = async (id, taskId) => {
-        return await Project.updateOne({ _id: id }, { $push: { todo: taskId } });
+        return await Project.findByIdAndUpdate({ _id: id }, { $push: { todo: taskId } });
     }
 
     const removeTask = async (id, taskId) => {
-        return await Project.updateOne({ _id: id }, { $pull: { done: taskId } });
+        return await Project.findByIdAndUpdate({ _id: id }, { $pull: { done: taskId } });
     }
 
     const finishTask = async (id, taskId) => {
         await Project.updateOne({ _id: id }, { $pull: { todo: taskId } });
-        return await Project.updateOne({ _id: id }, { $push: { done: taskId } });
+        return await Project.findByIdAndUpdate({ _id: id }, { $push: { done: taskId } });
     }
 
     const remove = async (id) => {
