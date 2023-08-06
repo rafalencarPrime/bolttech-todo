@@ -8,7 +8,10 @@ const AuthenticationService = () => {
 
         const dbUser = await UserService.findByEmail(user.email);
         if (dbUser){
-            if (AuthUtils.equals(user.password, dbUser.password)) return AuthUtils.createToken(dbUser._id);
+            if (AuthUtils.equals(user.password, dbUser.password)) return {
+                token:AuthUtils.createToken(dbUser._id),
+                user: dbUser._id
+            }
             else throw "Wrong password";
         }
         else throw 'User not found';

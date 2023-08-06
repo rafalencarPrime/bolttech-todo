@@ -8,10 +8,10 @@ const router = express.Router()
 router.post('/login', async (req, res) => {
     
     try {
-        const token = await AuthencticationService.login(req.body); 
+        const data = await AuthencticationService.login(req.body);
         res.status(200).json({
             message: "Login success",
-            token: token
+            payload: data
         });   
     }
     catch(e) {

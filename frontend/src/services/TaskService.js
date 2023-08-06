@@ -1,20 +1,22 @@
 
 import axios from "axios";
 
-const backend_url = 'http://localhost:4000/tasks';
+import Config from '../config/Config';
+
+const SERVER_URL = `${Config.serverUrl}/projects`;
 
 const TaskService = () => {
     
     const createTask = async (projectId, description) => {
-        return (await axios.post(`${backend_url}/${projectId}`, {description: description})).data.payload;
+        return (await axios.post(`${SERVER_URL}/${projectId}`, {description: description})).data.payload;
     }
     
     const finishTask = async (id) => {
-        return (await axios.put(`${backend_url}/finish/${id}`)).data.payload;
+        return (await axios.put(`${SERVER_URL}/finish/${id}`)).data.payload;
     }
 
     const deleteTask = async (id) => {
-        await axios.delete(`${backend_url}/${id}`);
+        await axios.delete(`${SERVER_URL}/${id}`);
     }
 
     return {

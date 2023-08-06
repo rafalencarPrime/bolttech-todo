@@ -1,24 +1,26 @@
 
 import axios from "axios";
 
-const backend_url = 'http://localhost:4000/projects';
+import Config from '../config/Config';
+
+const SERVER_URL = `${Config.serverUrl}/projects`;
 
 const ProjectService = () => {
     
     const getProjects = async () => {
-        return (await axios.get(backend_url)).data.payload;
+        return (await axios.get(SERVER_URL)).data.payload;
     }
 
     const createProject = async (name) => {
-        return (await axios.post(backend_url, {name: name})).data.payload;
+        return (await axios.post(SERVER_URL, {name: name})).data.payload;
     }
     
     const changeProjectName = async (id, name) => {
-        return (await axios.put(`${backend_url}/${id}`, {name: name})).data.payload;
+        return (await axios.put(`${SERVER_URL}/${id}`, {name: name})).data.payload;
     }
 
     const deleteProject = async (id) => {
-        await axios.delete(`${backend_url}/${id}`);
+        await axios.delete(`${SERVER_URL}/${id}`);
     }
 
     return {
