@@ -11,14 +11,12 @@ const PrivateRoutes = () => {
 
     useEffect(() => {
 
-        // If user is not authenticated, redirect to login
         if (!auth.user) {
             navigate('/login', { replace: true, state: { from: location } });
         }
         
     }, [auth, location, navigate])
     
-    // User is authenticated and authorized
     return <Outlet />
 }
 
