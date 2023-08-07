@@ -3,7 +3,7 @@ import { useState } from 'react';
 import TaskCreate from './TaskCreate';
 import TaskService from '../../services/TaskService';
 
-import { Container, Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { InputGroup, Container, Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
 import { Trash, Pencil } from 'react-bootstrap-icons';
@@ -32,10 +32,16 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDeleteProject = async () => {
     await ProjectService.deleteProject(project._id);
     onRemoveProject(project._id);
   };
+
+  // const handleDeleteTask = async (id) => {
+  //   await TaskService.deleteTask(id);
+  //   project.todo = project.todo.filter(task => task._id !== id);
+  //   onUpdateProject(project);
+  // };
 
   const handleDate = (date) => {
     const splitDate = date.substring(0,10).split('-');
@@ -56,7 +62,7 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
           <Button onClick={handleEdit}>
             <Pencil/>
           </Button>
-          <Button onClick={handleDelete} variant="danger">
+          <Button onClick={handleDeleteProject} variant="danger">
             <Trash/>
           </Button>
         </Container>
@@ -64,13 +70,18 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
       <Card.Body>
         <Form.Group>
           <h6>To Do</h6>
-          {project.todo?.map((task) => (  
-            <Form.Check
-              key={task._id}
-              type="checkbox"
-              label={task.description}
-              onChange={(event) => handleCheckBox(task._id, event)}
-            />
+          {project.todo?.map((task) => (
+            // <InputGroup style={{display: 'flex', justifyContent: 'space-between' }}>
+              <Form.Check
+                key={task._id}
+                type="checkbox"
+                label={task.description}
+                onChange={(event) => handleCheckBox(task._id, event)}
+              />
+            //   <Button style={{ margin:'1%'}} onClick={(e) => handleDeleteTask(task._id)} variant="danger">
+            //     <Trash />
+            //   </Button>
+            // </InputGroup>
           ))}
         </Form.Group>
         <Form.Group> 

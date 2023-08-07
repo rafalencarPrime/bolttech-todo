@@ -21,7 +21,7 @@ const ProjectService = () => {
     }
 
     const removeTask = async (id, taskId) => {
-        return await Project.findByIdAndUpdate({ _id: id }, { $pull: { done: taskId } });
+        return await Project.findByIdAndUpdate({ _id: id }, { $pull: { todo: taskId } });
     }
 
     const finishTask = async (id, taskId) => {
