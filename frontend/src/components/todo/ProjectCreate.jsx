@@ -16,7 +16,9 @@ const ProjectCreate = ({onNewProject}) => {
 
   return (
     <Card style={{  paddingTop: '1%', width: '22rem', margin: '1%'}}>
-			<Card.Header>Create a new project</Card.Header>
+			<Card.Header>
+				<h5>Create a new project</h5>
+			</Card.Header>
 			<Card.Footer>
 				<Form onSubmit={handleSubmit}>
 					<InputGroup className="mb-3">

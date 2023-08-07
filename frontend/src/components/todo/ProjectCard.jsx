@@ -1,13 +1,18 @@
 
-import React from 'react';
-
+import { useState } from 'react';
 import TaskCreate from './TaskCreate';
 import TaskService from '../../services/TaskService';
 
-import { Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Container, Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
+import { Trash, Pencil } from 'react-bootstrap-icons';
+
 const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
+
+  const [editMode, setEditMode] = useState(false);
+
+  const [projectName, setProjectName] = useState(project.name);
 
   const handleCheckBox = async (id) => {
     const finishedTask = await TaskService.finishTask(id);
@@ -16,9 +21,15 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
     onUpdateProject(project);
   };
 
-  const handleEdit = async (id, event) => {
-    await ProjectService.changeProjectName();
-    onUpdateProject();
+  const handleEdit = async (event) => {
+    if(editMode){
+      const updateProject = await ProjectService.changeProjectName(project._id, projectName);
+      onUpdateProject(updateProject);
+      setEditMode(false);
+    }
+    else{
+      setEditMode(true);
+    }
   };
 
   const handleDelete = async () => {
@@ -26,21 +37,36 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
     onRemoveProject(project._id);
   };
 
+  const handleDate = (date) => {
+    const splitDate = date.substring(0,10).split('-');
+    return `${splitDate[2]}/${splitDate[1]}/${splitDate[0]}`
+  };
+
   return (
     <Card style={{ paddingTop: '1%', width: '22rem', margin: '1%'}}>
       <Card.Header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Card.Title>{project.name}</Card.Title>
-        <div>
-          <Button onClick={handleEdit}>Edit</Button>
-          <Button onClick={handleDelete}>Delete</Button>
-        </div>
+        {!editMode && <Card.Title style={{ width: '15rem'}}>{projectName}</Card.Title>}
+        {editMode && <Form disabled={!editMode}>
+          <Form.Group className="mb-3" controlId="formPlaintextEmail">
+              <Form.Control value={projectName} type='text'
+                onChange={(e) => setProjectName(e.target.value)} required/>
+            </Form.Group>
+          </Form>}
+        <Container style={{ width: '10rem', display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={handleEdit}>
+            <Pencil/>
+          </Button>
+          <Button onClick={handleDelete} variant="danger">
+            <Trash/>
+          </Button>
+        </Container>
       </Card.Header>
       <Card.Body>
         <Form.Group>
           <h6>To Do</h6>
           {project.todo?.map((task) => (  
             <Form.Check
-            key={task._id}
+              key={task._id}
               type="checkbox"
               label={task.description}
               onChange={(event) => handleCheckBox(task._id, event)}
@@ -50,14 +76,20 @@ const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
         <Form.Group> 
           <h6>Done</h6>
           {project.done?.map((task) => (
-            <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip-right">{task.finishedAt}</Tooltip>}>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip id={task._id}>Finished at: {handleDate(task.finishedAt)}</Tooltip>}>
+              <Container>
               <Form.Check
                 key={task._id}
                 checked
-                disabled
+                disabled={true}
                 type="checkbox"
                 label={task.description}>
               </Form.Check>
+                </Container>
+
+              
             </OverlayTrigger>
           ))}
         </Form.Group>
