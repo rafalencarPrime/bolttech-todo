@@ -1,12 +1,15 @@
 
 import { useState } from 'react';
-import { Card, Button, Form, Row} from 'react-bootstrap';
+import { Alert, Card, Button, Form, Row} from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.js';
 
 const LoginPage = () => {
+
+  const location = useLocation();
+  const [showAlert, setShowAlert] = useState(location.state?.showAlert);
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -34,37 +37,43 @@ const LoginPage = () => {
         }
       }
       finally {
+        setShowAlert(false)
         setSubmitDisabled(false);
       }
     }
     catch (e) {
-        console.error(e);
         setLoginError(true);
     }
   }
 
   return (
-    <Card style={{ padding: '1%', width: '50%', margin: '1%'}}>
-      <Card.Header>Login</Card.Header>
-      { loginError && <div className='alert alert-danger text-center'>Login Error</div> }
-      <Form disabled={submitDisabled}>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control value={email} type='email' plaintext defaultValue="email@example.com" 
-          onChange={(e) => setEmail(e.target.value)} required autoFocus />
-      </Form.Group>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} type="password" placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)} required />
-      </Form.Group>
-      <Button onClick={handleSubmit}>Submit</Button>
-    </Form>
-
-    <div>
-      <Link to='/register'>Register</Link>
-    </div>
-    </Card>
+    <>
+    {showAlert && <Alert variant="success">Register success!</Alert>}
+      <Card style={{ padding: '1%', width: '50%', margin: '1%'}}>
+        <Card.Header>
+          <h3>Login</h3>
+        </Card.Header>
+        { loginError && <div className='alert alert-danger text-center'>Login Error</div> }
+        <Card.Body>
+          <Form disabled={submitDisabled}>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+              <h5>Email</h5>
+              <Form.Control value={email} type='email' placeholder="email@example.com" 
+                onChange={(e) => setEmail(e.target.value)} required/>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <h5>Password</h5>
+              <Form.Control value={password} type="password" placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)} required />
+            </Form.Group>
+          </Form>
+        </Card.Body>
+        <Card.Footer>
+          <Button onClick={handleSubmit}>Submit</Button>
+          <Link to='/register'>Register</Link>
+        </Card.Footer>
+      </Card>
+    </>
   );
 };
 

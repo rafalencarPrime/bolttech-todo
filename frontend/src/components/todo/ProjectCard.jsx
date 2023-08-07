@@ -1,61 +1,113 @@
 
-import React from 'react';
-
+import { useState } from 'react';
 import TaskCreate from './TaskCreate';
 import TaskService from '../../services/TaskService';
 
-import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
+import { InputGroup, Container, Card, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import ProjectService from '../../services/ProjectService';
 
-const ProjectCard = ({project}) => {
+import { Trash, Pencil } from 'react-bootstrap-icons';
 
-  const handleCheckBox = async (id, event) => {
-    await TaskService.finishTask(id);
+const ProjectCard = ({project, onUpdateProject, onRemoveProject}) => {
+
+  const [editMode, setEditMode] = useState(false);
+
+  const [projectName, setProjectName] = useState(project.name);
+
+  const handleCheckBox = async (id) => {
+    const finishedTask = await TaskService.finishTask(id);
+    project.todo = project.todo.filter(task => task._id !== id);
+    project.done.push(finishedTask);
+    onUpdateProject(project);
   };
 
-  const handleEdit = async (id, event) => {
-    await ProjectService.changeProjectName();
+  const handleEdit = async (event) => {
+    if(editMode){
+      const updateProject = await ProjectService.changeProjectName(project._id, projectName);
+      onUpdateProject(updateProject);
+      setEditMode(false);
+    }
+    else{
+      setEditMode(true);
+    }
   };
 
-  const handleDelete = async (id, event) => {
-    await ProjectService.deleteProject();
+  const handleDeleteProject = async () => {
+    await ProjectService.deleteProject(project._id);
+    onRemoveProject(project._id);
+  };
+
+  // const handleDeleteTask = async (id) => {
+  //   await TaskService.deleteTask(id);
+  //   project.todo = project.todo.filter(task => task._id !== id);
+  //   onUpdateProject(project);
+  // };
+
+  const handleDate = (date) => {
+    const splitDate = date.substring(0,10).split('-');
+    return `${splitDate[2]}/${splitDate[1]}/${splitDate[0]}`
   };
 
   return (
-    <Card style={{ paddingTop: '1%', width: '18rem', margin: '1%'}}>
+    <Card style={{ paddingTop: '1%', width: '22rem', margin: '1%'}}>
       <Card.Header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Card.Title>{project.name}</Card.Title>
-        <div>
-          <Button onClick={handleEdit}>Edit</Button>
-          <Button onClick={handleDelete}>Delete</Button>
-        </div>
+        {!editMode && <Card.Title style={{ width: '15rem'}}>{projectName}</Card.Title>}
+        {editMode && <Form disabled={!editMode}>
+          <Form.Group className="mb-3" controlId="formPlaintextEmail">
+              <Form.Control value={projectName} type='text'
+                onChange={(e) => setProjectName(e.target.value)} required/>
+            </Form.Group>
+          </Form>}
+        <Container style={{ width: '10rem', display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={handleEdit}>
+            <Pencil/>
+          </Button>
+          <Button onClick={handleDeleteProject} variant="danger">
+            <Trash/>
+          </Button>
+        </Container>
       </Card.Header>
       <Card.Body>
-        <ListGroup className="list-group-flush">To Do
+        <Form.Group>
+          <h6>To Do</h6>
           {project.todo?.map((task) => (
-            <ListGroupItem key={task._id}>
+            // <InputGroup style={{display: 'flex', justifyContent: 'space-between' }}>
               <Form.Check
+                key={task._id}
                 type="checkbox"
                 label={task.description}
                 onChange={(event) => handleCheckBox(task._id, event)}
               />
-            </ListGroupItem>))
-          }
-        </ListGroup>
-        <ListGroup className="list-group-flush"> Done
+            //   <Button style={{ margin:'1%'}} onClick={(e) => handleDeleteTask(task._id)} variant="danger">
+            //     <Trash />
+            //   </Button>
+            // </InputGroup>
+          ))}
+        </Form.Group>
+        <Form.Group> 
+          <h6>Done</h6>
           {project.done?.map((task) => (
-            <ListGroupItem key={task.description}>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip id={task._id}>Finished at: {handleDate(task.finishedAt)}</Tooltip>}>
+              <Container>
               <Form.Check
+                key={task._id}
                 checked
-                disabled
+                disabled={true}
                 type="checkbox"
-                label={task.description}
-              />
-            </ListGroupItem>))
-          }
-        </ListGroup>
-        <TaskCreate projectId={project._id}></TaskCreate>
+                label={task.description}>
+              </Form.Check>
+                </Container>
+
+              
+            </OverlayTrigger>
+          ))}
+        </Form.Group>
       </Card.Body>
+      <Card.Footer>
+        <TaskCreate project={project} onUpdateProject={onUpdateProject}/>
+      </Card.Footer>
     </Card>
   )
 }

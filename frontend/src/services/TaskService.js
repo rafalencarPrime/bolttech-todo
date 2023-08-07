@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Config from '../config/Config';
 
-const SERVER_URL = `${Config.serverUrl}/projects`;
+const SERVER_URL = `${Config.serverUrl}/tasks`;
 
 const TaskService = () => {
     

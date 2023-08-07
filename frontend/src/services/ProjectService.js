@@ -16,7 +16,7 @@ const ProjectService = () => {
     }
     
     const changeProjectName = async (id, name) => {
-        return (await axios.put(`${SERVER_URL}/${id}`, {name: name})).data.payload;
+        return (await axios.put(`${SERVER_URL}/changeName/${id}`, {name: name})).data.payload;
     }
 
     const deleteProject = async (id) => {

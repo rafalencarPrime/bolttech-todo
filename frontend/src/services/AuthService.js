@@ -12,7 +12,12 @@ const AuthService = () => {
     }
 
     const register = async (data) => {
-        return (await axios.post(`${SERVER_URL}/register`, data)).data;
+        try {
+            return (await axios.post(`${SERVER_URL}/register`, data)).data.success
+        } 
+        catch (error) {
+            return false
+        }
     }
 
     return {
