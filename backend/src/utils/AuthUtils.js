@@ -1,7 +1,7 @@
 
 import jwt    from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 dotenv.config();
 
@@ -12,14 +12,14 @@ const AuthUtils = () => {
     const DEFAULT_SALT_STRING = process.env.DEFAULT_SALT || '10';
     const DEFAULT_SALT = Number(DEFAULT_SALT_STRING)
 
-    const salt = bcrypt.genSaltSync(DEFAULT_SALT);
+    const salt = bcryptjs.genSaltSync(DEFAULT_SALT);
 
     const hash = (text) => {
-        return bcrypt.hashSync(String(text), salt);
+        return bcryptjs.hashSync(String(text), salt);
     }
 
     const equals = (clearText, hashedText) => {
-        return bcrypt.compareSync(clearText, hashedText);
+        return bcryptjs.compareSync(clearText, hashedText);
     }
 
     const createToken = (id) => {

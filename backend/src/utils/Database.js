@@ -1,12 +1,18 @@
 
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const Database = () => {
 
     const connect = async () => {
 
         try {
-            await mongoose.connect('mongodb://0.0.0.0:27017/bolttechtodo');
+
+            const DB_URL = process.env.DB_URL || 'mongodb://0.0.0.0:27017/bolttechtodo';
+            
+            await mongoose.connect(DB_URL);
 
             mongoose.connection.on('error', (e) => {
                 console.log(`database error: ${e}`)
