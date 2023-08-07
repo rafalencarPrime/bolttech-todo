@@ -1,14 +1,17 @@
 
-import express  from 'express';
-import cors     from 'cors';
-import auth     from './routes/authentication.js';
+import express   from 'express';
+import cors      from 'cors';
+import dotenv    from 'dotenv';
+import auth      from './routes/authentication.js';
 import AuthUtils from './utils/AuthUtils.js'
-import projects from './routes/projects.js';
-import tasks    from './routes/tasks.js';
-import Database from './utils/Database.js';
+import projects  from './routes/projects.js';
+import tasks     from './routes/tasks.js';
+import Database  from './utils/Database.js';
+
+dotenv.config();
 
 const app = express()
-const port = 4000
+const port = process.env.SERVER_PORT;
 
 app.use(cors({ origin: '*' }));
 app.use(express.json())
